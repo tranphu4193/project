@@ -30,7 +30,8 @@ type AddPerfumeData = {
     fragranceBaseNotes: string;
     price: string;
 };
-
+const perfumeTypes = ["Chanel", "Christian Dior", "Guerlain", "Jean Paul Gaultier", "Nina Ricci",
+    "Yves Saint Laurent", "Calvin Klein", "Gucci", "Louis Vuitton", "Dior" , "Hermès"];
 const AddPerfume: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const isPerfumeAdded = useSelector(selectIsPerfumeAdded);
@@ -57,10 +58,9 @@ const AddPerfume: FC = (): ReactElement => {
         }
     }, [isPerfumeAdded]);
 
-    const onFormSubmit = (data: AddPerfumeData): void => {
+    const onFormSubmit = (data: AddPerfumeData) => {
         const bodyFormData: FormData = new FormData();
-        // @ts-ignore
-        bodyFormData.append("file", { file });
+        bodyFormData.append("file", file);
         bodyFormData.append(
             "perfume",
             new Blob([JSON.stringify({ ...data, perfumeRating: 0 })], { type: "application/json" })
@@ -99,7 +99,7 @@ const AddPerfume: FC = (): ReactElement => {
                             error={perfumeErrors.typeError}
                             placeholder={"Eau de Parfum"}
                             disabled={ispPerfumeLoading}
-                            values={["Eau de Parfum", "Eau de Toilette"]}
+                            values={perfumeTypes}
                         />
                         <AddFormSelect
                             title={"Gender"}
@@ -107,7 +107,7 @@ const AddPerfume: FC = (): ReactElement => {
                             error={perfumeErrors.perfumeGenderError}
                             placeholder={"male"}
                             disabled={ispPerfumeLoading}
-                            values={["male", "female"]}
+                            values={["Male", "Female", "Other"]}
                         />
                         <AddFormInput
                             title={"Heart notes"}
